@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pwdsumon - Personal Portfolio</title>
+
+    <!-- Place favicon.ico in the root directory -->
+    <link rel="apple-touch-icon" href="assets/images/fav.svg" />
+    <link rel="shortcut icon" type="image/x-icon" href="https://res.cloudinary.com/kaepaboss/image/upload/portfolio/favicon.png" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+    <style>
+        /* Smooth Scroll Behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Custom Transition for Navbar Background */
+        .nav-transition {
+            transition: all 0.5s ease-in-out;
+        }
+
+        /* Mobile Menu Animation */
+        #mobile-menu {
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            transform: translateY(-20px);
+            opacity: 0;
+            display: none;
+        }
+
+        #mobile-menu.active {
+            display: block;
+            transform: translateY(0);
+            opacity: 1;
+        }
+    </style>
+
+</head>
+<body class="bg-slate-900 h-[200vh]"> 
+
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 nav-transition bg-transparent py-5">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                
+                <a href="#home" class="flex items-center gap-3 transform transition hover:scale-105">
+                    <img src="https://res.cloudinary.com/kaepaboss/image/upload/v1702992648/portfolio/logo.png" 
+                         alt="Logo" class="h-10 w-auto">
+                </a>
+
+                <div class="hidden md:flex items-center gap-1">
+                    <button onclick="scrollToSection('#home')" class="nav-link px-5 py-2.5 rounded-full text-sm font-medium text-white/90 hover:text-white hover:bg-white/10 transition-all duration-300">Home</button>
+                    <button onclick="scrollToSection('#about')" class="nav-link px-5 py-2.5 rounded-full text-sm font-medium text-white/90 hover:text-white hover:bg-white/10 transition-all duration-300">About</button>
+                    <button onclick="scrollToSection('#services')" class="nav-link px-5 py-2.5 rounded-full text-sm font-medium text-white/90 hover:text-white hover:bg-white/10 transition-all duration-300">Services</button>
+                    <button onclick="scrollToSection('#portfolio')" class="nav-link px-5 py-2.5 rounded-full text-sm font-medium text-white/90 hover:text-white hover:bg-white/10 transition-all duration-300">Portfolio</button>
+                    <button onclick="scrollToSection('#contact')" class="nav-link px-5 py-2.5 rounded-full text-sm font-medium text-white/90 hover:text-white hover:bg-white/10 transition-all duration-300">Contact</button>
+                </div>
+
+                <button onclick="scrollToSection('#contact')" class="hidden md:block px-6 py-2.5 bg-gradient-to-r from-teal-500 to-emerald-500 text-white text-sm font-semibold rounded-full shadow-lg shadow-teal-500/30 hover:shadow-teal-500/50 transform transition hover:scale-105 active:scale-95">
+                    Hire Me
+                </button>
+
+                <button id="menu-btn" class="md:hidden p-2 rounded-lg text-white transition-colors">
+                    <i data-lucide="menu" id="menu-icon"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div id="mobile-menu" class="fixed inset-0 z-40 md:hidden">
+        <div class="absolute inset-0 bg-slate-900/95 backdrop-blur-xl flex flex-col items-center justify-center gap-6">
+            <button onclick="scrollToSection('#home')" class="text-2xl font-medium text-white hover:text-teal-400">Home</button>
+            <button onclick="scrollToSection('#about')" class="text-2xl font-medium text-white hover:text-teal-400">About</button>
+            <button onclick="scrollToSection('#services')" class="text-2xl font-medium text-white hover:text-teal-400">Services</button>
+            <button onclick="scrollToSection('#portfolio')" class="text-2xl font-medium text-white hover:text-teal-400">Portfolio</button>
+            <button onclick="scrollToSection('#contact')" class="text-2xl font-medium text-white hover:text-teal-400">Contact</button>
+            
+            <button onclick="scrollToSection('#contact')" class="mt-4 px-8 py-3 bg-gradient-to-r from-teal-500 to-emerald-500 text-white font-semibold rounded-full">
+                Hire Me
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        const navbar = document.getElementById('navbar');
+        const menuBtn = document.getElementById('menu-btn');
+        const menuIcon = document.getElementById('menu-icon');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        // Scroll Effect 📜
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.remove('bg-transparent', 'py-5');
+                navbar.classList.add('bg-white/95', 'backdrop-blur-lg', 'shadow-lg', 'shadow-slate-200/50', 'py-2');
+                
+                // Change link colors
+                navLinks.forEach(link => {
+                    link.classList.remove('text-white/90', 'hover:bg-white/10');
+                    link.classList.add('text-slate-700', 'hover:text-teal-600', 'hover:bg-teal-50');
+                });
+                menuBtn.classList.add('text-slate-700');
+                menuBtn.classList.remove('text-white');
+            } else {
+                navbar.classList.add('bg-transparent', 'py-5');
+                navbar.classList.remove('bg-white/95', 'backdrop-blur-lg', 'shadow-lg', 'shadow-slate-200/50', 'py-2');
+                
+                // Reset link colors
+                navLinks.forEach(link => {
+                    link.classList.add('text-white/90', 'hover:bg-white/10');
+                    link.classList.remove('text-slate-700', 'hover:text-teal-600', 'hover:bg-teal-50');
+                });
+                menuBtn.classList.remove('text-slate-700');
+                menuBtn.classList.add('text-white');
+            }
+        });
+
+        // Mobile Menu Toggle 👆
+        menuBtn.addEventListener('click', () => {
+            const isOpen = mobileMenu.classList.contains('active');
+            if (isOpen) {
+                mobileMenu.classList.remove('active');
+                menuIcon.setAttribute('data-lucide', 'menu');
+            } else {
+                mobileMenu.classList.add('active');
+                menuIcon.setAttribute('data-lucide', 'x');
+            }
+            lucide.createIcons(); // Refresh icons
+        });
+
+        // Smooth Scroll Function 📍
+        function scrollToSection(id) {
+            const element = document.querySelector(id);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
+            // Close mobile menu
+            mobileMenu.classList.remove('active');
+            menuIcon.setAttribute('data-lucide', 'menu');
+            lucide.createIcons();
+        }
+    </script>
+
+    <style>
+        /* Smooth Scrolling 🌊 */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #0f172a; 
+            margin: 0;
+            color: white;
+        }
+        
+        /* Custom Typing Cursor ⌨️ */
+        .cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1.5rem;
+            background-color: #2dd4bf;
+            margin-left: 4px;
+            animation: blink 1s infinite;
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        /* Floating Animation for Badges 🎈 */
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        /* Glassmorphism Effect 🥛 */
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+
+    <section id="home" class="relative min-h-screen overflow-hidden flex items-center">
+        
+        <div class="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 -z-10">
+            <div class="absolute top-1/4 -left-32 w-96 h-96 bg-teal-500/20 rounded-full blur-3xl opacity-50 animate-pulse"></div>
+            <div class="absolute bottom-1/4 -right-32 w-96 h-96 bg-emerald-500/20 rounded-full blur-3xl opacity-50 animate-pulse"></div>
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-teal-600/10 rounded-full blur-3xl"></div>
+            <div class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:64px_64px]"></div>
+        </div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 pt-20 w-full">
+            <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                
+                <div id="hero-left">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full mb-8">
+                        <span class="w-2 h-2 bg-teal-400 rounded-full animate-ping"></span>
+                        <span class="text-teal-400 text-sm font-medium">Available for work</span>
+                    </div>
+
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-tight mb-6">
+                        Hi, I'm <span class="bg-gradient-to-r from-teal-400 via-emerald-400 to-teal-400 bg-clip-text text-transparent">Pwdsumon</span>
+                    </h1>
+
+                    <div class="h-12 mb-8">
+                        <span id="role-text" class="text-xl sm:text-2xl lg:text-3xl text-slate-300"></span>
+                        <span class="cursor"></span>
+                    </div>
+
+                    <p class="text-slate-400 text-lg max-w-xl mb-10 leading-relaxed">
+                        Crafting seamless digital experiences with artistic flair and technical precision. 
+                        I transform your vision into pixel-perfect, responsive websites.
+                    </p>
+
+                    <div class="flex flex-wrap gap-3 mb-10">
+                        <a href="mailto:pwdsumonbd@gmail.com" class="inline-flex items-center gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full text-slate-300 text-sm transition-all hover:border-teal-500/50">
+                            <i data-lucide="mail" class="w-4 h-4 text-teal-400"></i> pwdsumonbd@gmail.com
+                        </a>
+                        <a href="tel:+8801988967066" class="inline-flex items-center gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full text-slate-300 text-sm transition-all hover:border-teal-500/50">
+                            <i data-lucide="phone" class="w-4 h-4 text-teal-400"></i> +88 01988967066
+                        </a>
+                        <span class="inline-flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-full text-slate-300 text-sm">
+                            <i data-lucide="map-pin" class="w-4 h-4 text-teal-400"></i> Khulna, Bangladesh
+                        </span>
+                    </div>
+
+                    <div class="flex flex-wrap gap-4">
+                        <button onclick="scrollToSection('#portfolio')" class="px-8 py-4 bg-gradient-to-r from-teal-500 to-emerald-500 text-white font-semibold rounded-2xl shadow-xl shadow-teal-500/30 hover:scale-105 transition-all duration-300">
+                            View My Work
+                        </button>
+                        <button onclick="scrollToSection('#contact')" class="px-8 py-4 bg-white/5 backdrop-blur-sm border border-white/20 text-white font-semibold rounded-2xl hover:bg-white/10 transition-all duration-300">
+                            Let's Talk
+                        </button>
+                    </div>
+                </div>
+
+                <div id="hero-right" class="relative flex justify-center lg:justify-end">
+                    <div class="relative">
+                        <div class="absolute inset-0 rounded-full border-2 border-teal-500/20 scale-110 animate-pulse"></div>
+                        <div class="absolute inset-0 rounded-full border border-emerald-500/10 scale-125"></div>
+                        <div class="absolute inset-0 bg-gradient-to-br from-teal-500/30 to-emerald-500/30 rounded-full blur-2xl"></div>
+                        
+                        <div class="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden border-4 border-white/10 shadow-2xl">
+                            <img src="https://res.cloudinary.com/dldsrhps2/image/upload/v1702992648/portfolio/profile.jpg" alt="Pwdsumon" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-900/50 to-transparent"></div>
+                        </div>
+
+                        <div class="floating absolute -left-4 top-1/4 px-4 py-2 bg-white rounded-xl shadow-xl z-20" style="animation-delay: 0s;">
+                            <span class="text-sm font-semibold text-slate-800">🎨 Web Design</span>
+                        </div>
+
+                        <div class="floating absolute -right-4 top-1/4 px-4 py-2 bg-gradient-to-r from-teal-500 to-emerald-500 rounded-xl shadow-xl z-20" style="animation-delay: 0.5s;">
+                            <span class="text-sm font-semibold text-white">💻 Web Development</span>
+                        </div>
+
+                        <div class="floating absolute -left-6 bottom-1/4 px-4 py-2 bg-slate-800 border border-slate-700 rounded-xl shadow-xl z-20" style="animation-delay: 1s;">
+                            <span class="text-sm font-semibold text-white">✨ UI/UX Enthusiast</span>
+                        </div>
+
+                        <div class="floating absolute -right-6 bottom-1/4 px-4 py-2 bg-gradient-to-r from-teal-900 to-emerald-900 rounded-xl shadow-xl z-20" style="animation-delay: 1.5s;">
+                            <span class="text-sm font-semibold text-white">🛠️ Customization</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div 
+            onclick="scrollToSection('#about')" 
+            class="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/50 hover:text-white transition-colors cursor-pointer z-20"
+        >
+            <div class="animate-bounce">
+                <i data-lucide="chevron-down" class="w-8 h-8"></i>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Initialize Lucide Icons 🎭
+        lucide.createIcons();
+
+        // Typing Effect Logic ⌨️
+        const roles = ['Web Designer', 'Web Developer', 'WordPress Expert', 'UI/UX Enthusiast'];
+        let roleIdx = 0;
+        let charIdx = 0;
+        let isDeleting = false;
+        const roleElement = document.getElementById('role-text');
+
+        function type() {
+            const currentRole = roles[roleIdx];
+            if (isDeleting) {
+                roleElement.textContent = currentRole.substring(0, charIdx - 1);
+                charIdx--;
+            } else {
+                roleElement.textContent = currentRole.substring(0, charIdx + 1);
+                charIdx++;
+            }
+
+            let typeSpeed = isDeleting ? 50 : 100;
+
+            if (!isDeleting && charIdx === currentRole.length) {
+                typeSpeed = 2000; // Pause at end
+                isDeleting = true;
+            } else if (isDeleting && charIdx === 0) {
+                isDeleting = false;
+                roleIdx = (roleIdx + 1) % roles.length;
+                typeSpeed = 500;
+            }
+
+            setTimeout(type, typeSpeed);
+        }
+
+        // Smooth Scroll Function 🖱️
+        function scrollToSection(sectionId) {
+            const element = document.querySelector(sectionId);
+            if (element) {
+                window.scrollTo({
+                    top: element.offsetTop - 70, // Header Offset
+                    behavior: 'smooth'
+                });
+            }
+        }
+
+        // Entrance Animations with GSAP 🎬
+        window.onload = () => {
+            type();
+            gsap.from("#hero-left", { opacity: 0, x: -50, duration: 1, ease: "power3.out" });
+            gsap.from("#hero-right", { opacity: 0, x: 50, duration: 1, ease: "power3.out", delay: 0.2 });
+        };
+    </script>
+
+    <style>
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+
+    <section id="about" class="relative py-24 lg:py-32 bg-gradient-to-b from-white to-slate-50 overflow-hidden">
+        
+        <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent"></div>
+        <div class="absolute -top-40 -right-40 w-80 h-80 bg-teal-100 rounded-full blur-3xl opacity-50"></div>
+        <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-emerald-100 rounded-full blur-3xl opacity-50"></div>
+
+        <div class="relative max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center mb-20">
+                
+                <div class="relative reveal" id="about-image">
+                    <div class="relative">
+                        <div class="relative rounded-3xl overflow-hidden shadow-2xl">
+                            <img src="https://res.cloudinary.com/kaepaboss/image/upload/v1702992648/portfolio/profile.jpg" 
+                                 alt="About Pwdsumon" class="w-full aspect-[4/5] object-cover" style=" width: 85%; margin: 0 auto; ">
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-900/30 to-transparent"></div>
+                        </div>
+
+                        <div class="absolute -bottom-8 -right-8 lg:-right-12 p-6 bg-white rounded-2xl shadow-2xl border border-slate-100 reveal" style="transition-delay: 0.4s;">
+                            <div class="flex items-center gap-4">
+                                <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-teal-500 to-emerald-500 flex items-center justify-center">
+                                    <i data-lucide="award" class="w-7 h-7 text-white"></i>
+                                </div>
+                                <div>
+                                    <div class="text-2xl font-bold text-slate-900">5+ Years</div>
+                                    <div class="text-slate-500">of Excellence</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="absolute -z-10 -top-6 -left-6 w-full h-full rounded-3xl border-2 border-teal-500/20"></div>
+                    </div>
+                </div>
+
+                <div class="reveal" id="about-content" style="transition-delay: 0.2s;">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 bg-teal-50 rounded-full mb-6">
+                        <span class="w-2 h-2 bg-teal-500 rounded-full"></span>
+                        <span class="text-teal-700 text-sm font-semibold uppercase tracking-wider">About Me</span>
+                    </div>
+
+                    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 mb-6 leading-tight">
+                        Crafting Digital
+                        <span class="block bg-gradient-to-r from-teal-500 to-emerald-500 bg-clip-text text-transparent">
+                            Experiences
+                        </span>
+                    </h2>
+
+                    <div class="space-y-5 text-slate-600 leading-relaxed">
+                        <p>
+                            Greetings, I'm <span class="font-semibold text-slate-900">Pwdsumon</span>, a seasoned web designer and developer devoted to crafting seamless digital experiences. My approach blends artistic flair with technical precision.
+                        </p>
+                        <p>
+                            Through handcrafted, semantic code, I transform complex challenges into simple, intuitive interfaces, ensuring a satisfying journey for every visitor.
+                        </p>
+                        <p>
+                            With a focus on <span class="font-semibold text-teal-600">pixel-perfection</span>, <span class="font-semibold text-teal-600">mobile responsiveness</span>, and <span class="font-semibold text-teal-600">SEO-friendliness</span>.
+                        </p>
+                    </div>
+
+                    <div class="flex flex-wrap gap-3 mt-8">
+                        <span class="skill-tag px-4 py-2 bg-slate-100 text-slate-700 text-sm font-medium rounded-full hover:bg-teal-50 hover:text-teal-700 transition-colors cursor-default">HTML5</span>
+                        <span class="skill-tag px-4 py-2 bg-slate-100 text-slate-700 text-sm font-medium rounded-full hover:bg-teal-50 hover:text-teal-700 transition-colors cursor-default">CSS3</span>
+                        <span class="skill-tag px-4 py-2 bg-slate-100 text-slate-700 text-sm font-medium rounded-full hover:bg-teal-50 hover:text-teal-700 transition-colors cursor-default">JavaScript</span>
+                        <span class="skill-tag px-4 py-2 bg-slate-100 text-slate-700 text-sm font-medium rounded-full hover:bg-teal-50 hover:text-teal-700 transition-colors cursor-default">React</span>
+                        <span class="skill-tag px-4 py-2 bg-slate-100 text-slate-700 text-sm font-medium rounded-full hover:bg-teal-50 hover:text-teal-700 transition-colors cursor-default">WordPress</span>
+                        <span class="skill-tag px-4 py-2 bg-slate-100 text-slate-700 text-sm font-medium rounded-full hover:bg-teal-50 hover:text-teal-700 transition-colors cursor-default">SEO</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="group relative reveal" style="transition-delay: 0.1s;">
+                    <div class="relative p-8 bg-white rounded-3xl border border-slate-100 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
+                        <div class="inline-flex p-4 rounded-2xl bg-gradient-to-br from-teal-500 to-emerald-500 shadow-lg mb-6">
+                            <i data-lucide="briefcase" class="w-6 h-6 text-white"></i>
+                        </div>
+                        <div class="text-4xl lg:text-5xl font-bold text-slate-900 mb-2">80+</div>
+                        <div class="text-slate-500 font-medium">Projects Complete</div>
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-teal-500 opacity-5 rounded-full blur-2xl group-hover:opacity-10 transition-opacity"></div>
+                    </div>
+                </div>
+
+                <div class="group relative reveal" style="transition-delay: 0.2s;">
+                    <div class="relative p-8 bg-white rounded-3xl border border-slate-100 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
+                        <div class="inline-flex p-4 rounded-2xl bg-gradient-to-br from-violet-500 to-purple-500 shadow-lg mb-6">
+                            <i data-lucide="users" class="w-6 h-6 text-white"></i>
+                        </div>
+                        <div class="text-4xl lg:text-5xl font-bold text-slate-900 mb-2">80+</div>
+                        <div class="text-slate-500 font-medium">Happy Clients</div>
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-violet-500 opacity-5 rounded-full blur-2xl group-hover:opacity-10 transition-opacity"></div>
+                    </div>
+                </div>
+
+                <div class="group relative reveal" style="transition-delay: 0.3s;">
+                    <div class="relative p-8 bg-white rounded-3xl border border-slate-100 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
+                        <div class="inline-flex p-4 rounded-2xl bg-gradient-to-br from-orange-500 to-amber-500 shadow-lg mb-6">
+                            <i data-lucide="clock" class="w-6 h-6 text-white"></i>
+                        </div>
+                        <div class="text-4xl lg:text-5xl font-bold text-slate-900 mb-2">5000+</div>
+                        <div class="text-slate-500 font-medium">Working Hours</div>
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-orange-500 opacity-5 rounded-full blur-2xl group-hover:opacity-10 transition-opacity"></div>
+                    </div>
+                </div>
+
+                <div class="group relative reveal" style="transition-delay: 0.4s;">
+                    <div class="relative p-8 bg-white rounded-3xl border border-slate-100 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
+                        <div class="inline-flex p-4 rounded-2xl bg-gradient-to-br from-rose-500 to-pink-500 shadow-lg mb-6">
+                            <i data-lucide="award" class="w-6 h-6 text-white"></i>
+                        </div>
+                        <div class="text-4xl lg:text-5xl font-bold text-slate-900 mb-2">5+</div>
+                        <div class="text-slate-500 font-medium">Years Experience</div>
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-rose-500 opacity-5 rounded-full blur-2xl group-hover:opacity-10 transition-opacity"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Scroll Reveal Animation Logic 🖱️
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 150;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+
+        window.addEventListener("scroll", reveal);
+        // Initial check on load
+        reveal();
+    </script>
+
+    <style>
+        .portfolio-item {
+            transition: all 0.5s ease-in-out;
+        }
+        .portfolio-item.hidden {
+            display: none;
+            opacity: 0;
+            transform: scale(0.9);
+        }
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+
+    <section id="portfolio" class="relative py-24 lg:py-32 bg-white overflow-hidden">
+        
+        <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent"></div>
+        <div class="absolute top-1/3 right-0 w-96 h-96 bg-teal-50 rounded-full blur-3xl opacity-50"></div>
+        <div class="absolute bottom-1/3 left-0 w-96 h-96 bg-emerald-50 rounded-full blur-3xl opacity-50"></div>
+
+        <div class="relative max-w-7xl mx-auto px-6 lg:px-8">
+            
+            <div class="text-center max-w-3xl mx-auto mb-12 reveal">
+                <div class="inline-flex items-center gap-2 px-4 py-2 bg-teal-50 rounded-full mb-6">
+                    <span class="w-2 h-2 bg-teal-500 rounded-full"></span>
+                    <span class="text-teal-700 text-sm font-semibold uppercase tracking-wider">Portfolio</span>
+                </div>
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 mb-6">
+                    My Latest <span class="bg-gradient-to-r from-teal-500 to-emerald-500 bg-clip-text text-transparent">Work</span>
+                </h2>
+                <p class="text-lg text-slate-600">
+                    A showcase of projects that demonstrate my skills in creating beautiful, functional websites.
+                </p>
+            </div>
+
+            <div class="flex flex-wrap justify-center gap-3 mb-12 reveal" style="transition-delay: 0.2s;">
+                <button onclick="filterPortfolio('All')" class="filter-btn active px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 bg-gradient-to-r from-teal-500 to-emerald-500 text-white shadow-lg shadow-teal-500/30">All</button>
+                <button onclick="filterPortfolio('E-commerce')" class="filter-btn px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 bg-slate-100 text-slate-600 hover:bg-slate-200">E-commerce</button>
+                <button onclick="filterPortfolio('Agency')" class="filter-btn px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 bg-slate-100 text-slate-600 hover:bg-slate-200">Agency</button>
+                <button onclick="filterPortfolio('Restaurant')" class="filter-btn px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 bg-slate-100 text-slate-600 hover:bg-slate-200">Restaurant</button>
+                <button onclick="filterPortfolio('Personal')" class="filter-btn px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 bg-slate-100 text-slate-600 hover:bg-slate-200">Personal</button>
+            </div>
+
+            <div id="portfolio-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                </div>
+
+            <div id="show-more-container" class="text-center mt-16 reveal">
+                <button onclick="toggleShowAll()" id="show-more-btn" class="inline-flex items-center gap-2 px-8 py-4 bg-white border border-slate-200 rounded-2xl font-semibold text-slate-900 hover:bg-slate-50 transition-all duration-300 shadow-lg shadow-slate-100">
+                    <span>Show More Projects</span>
+                    <i data-lucide="chevron-down" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+        </div>
+    </section>
+
+    <script>
+        const portfolioData = [
+              {title: 'Marjito', category: 'E-commerce', type: 'E-commerce Website', image: 'https://res.cloudinary.com/kaepaboss/image/upload/v1702992648/portfolio/p001.png' },
+              {title: 'serviceontheweb', category: 'Agency', type: 'Agency Website', image: 'https://res.cloudinary.com/kaepaboss/image/upload/v1702992648/portfolio/p002.png' },
+              {title: 'Ashoka', category: 'Restaurant', type: 'Restaurant Website', image: 'https://res.cloudinary.com/kaepaboss/image/upload/v1702992648/portfolio/p003.png' },
+              {title: 'MrBeast', category: 'E-commerce', type: 'E-commerce Website', image: 'https://res.cloudinary.com/kaepaboss/image/upload/v1702992648/portfolio/p004.png' },
+              {title: 'Molapetstore', category: 'E-commerce', type: 'E-commerce Website', image: 'https://res.cloudinary.com/kaepaboss/image/upload/v1702992648/portfolio/p005.png' },
+              {title: 'DesignZone', category: 'Agency', type: 'Agency Website', image: 'https://res.cloudinary.com/kaepaboss/image/upload/v1702992648/portfolio/p006.png' },
+              {title: 'Samimmia', category: 'Personal', type: 'Personal Portfolio', image: 'https://res.cloudinary.com/kaepaboss/image/upload/v1702992648/portfolio/p007.png' },
+              {title: 'Padu', category: 'Agency', type: 'Firm Solution', image: 'https://res.cloudinary.com/kaepaboss/image/upload/v1702992648/portfolio/p008.png' },
+              {title: 'Mia Cosmetics', category: 'E-commerce', type: 'Cosmetics Shop', image: 'https://res.cloudinary.com/kaepaboss/image/upload/v1702992648/portfolio/p009.png' },
+              { title: 'Jaydealz', category: 'E-commerce', type: 'E-commerce Website', image: 'https://res.cloudinary.com/kaepaboss/image/upload/v1702992648/portfolio/p010.png' },
+              { title: 'Fidda', category: 'Agency', type: 'Agency Website', image: 'https://res.cloudinary.com/kaepaboss/image/upload/v1702992648/portfolio/p011.png' },
+              { title: 'Vibeswithvoicey', category: 'Personal', type: 'Artiste Website', image: 'https://res.cloudinary.com/kaepaboss/image/upload/v1702992648/portfolio/p012.png' },
+              { title: 'Alligator Laundromat', category: 'Agency', type: 'Web Development', image: 'https://res.cloudinary.com/kaepaboss/image/upload/v1702992648/portfolio/p013.png' },
+              { title: 'Mastering Study', category: 'Agency', type: 'Web Development', image: 'https://res.cloudinary.com/kaepaboss/image/upload/v1702992648/portfolio/p014.png' },
+              { title: 'Meko', category: 'Agency', type: 'Web Development', image: 'https://res.cloudinary.com/kaepaboss/image/upload/v1702992648/portfolio/p015.png' },
+              { title: 'LeeLeBail', category: 'Agency', type: 'Web Development', image: 'https://res.cloudinary.com/kaepaboss/image/upload/v1702992648/portfolio/p016.png' },
+              { title: 'BigBites', category: 'Restaurant', type: 'Restaurant Website', image: 'https://res.cloudinary.com/kaepaboss/image/upload/v1702992648/portfolio/p027.png' },
+              { title: 'Osaka', category: 'Restaurant', type: 'Restaurant Website', image: 'https://res.cloudinary.com/kaepaboss/image/upload/v1702992648/portfolio/p028.png' },
+              { title: 'Pointfulbd', category: 'E-commerce', type: 'E-commerce Website', image: 'https://res.cloudinary.com/kaepaboss/image/upload/v1702992648/portfolio/p041.png' },
+              { title: 'Immortellett', category: 'E-commerce', type: 'E-commerce Website', image: 'https://res.cloudinary.com/kaepaboss/image/upload/v1702992648/portfolio/p042.png' },
+              { title: 'Qleap', category: 'Agency', type: 'Web Development', image: 'https://res.cloudinary.com/kaepaboss/image/upload/v1702992648/portfolio/p020.png' },
+              { title: 'SecretHomes', category: 'Agency', type: 'Web Development', image: 'https://res.cloudinary.com/kaepaboss/image/upload/v1702992648/portfolio/p029.png' },
+              { title: 'Sarothi', category: 'Agency', type: 'Web Development', image: 'https://res.cloudinary.com/kaepaboss/image/upload/v1702992648/portfolio/p030.png' },
+              { title: 'WeKick', category: 'Agency', type: 'Web Development', image: 'https://res.cloudinary.com/kaepaboss/image/upload/v1702992648/portfolio/p031.png' },
+            // আপনি চাইলে বাকি আইটেমগুলো এখানে যোগ করতে পারেন...
+        ];
+
+        let currentCategory = 'All';
+        let isShowAll = false;
+
+        function renderPortfolio() {
+            const grid = document.getElementById('portfolio-grid');
+            grid.innerHTML = '';
+
+            const filtered = currentCategory === 'All' 
+                ? portfolioData 
+                : portfolioData.filter(item => item.category === currentCategory);
+
+            const displayItems = isShowAll ? filtered : filtered.slice(0, 6);
+
+            displayItems.forEach((item, index) => {
+                const card = `
+                    <div class="portfolio-item group relative reveal active">
+                        <div class="relative rounded-2xl overflow-hidden bg-white shadow-lg hover:shadow-2xl transition-all duration-500">
+                            <div class="relative aspect-[4/3] overflow-hidden">
+                                <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110">
+                                <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
+                                <div class="absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0">
+                                    <div class="w-14 h-14 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center cursor-pointer hover:scale-110 transition-transform">
+                                        <i data-lucide="external-link" class="w-6 h-6 text-white"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-5">
+                                <span class="text-xs font-semibold text-teal-600 uppercase tracking-wider">${item.type}</span>
+                                <h3 class="text-lg font-bold text-slate-900 mt-1 group-hover:text-teal-600 transition-colors">${item.title}</h3>
+                            </div>
+                            <div class="absolute top-4 left-4">
+                                <span class="px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-xs font-semibold text-slate-700">${item.category}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                grid.innerHTML += card;
+            });
+            lucide.createIcons();
+        }
+
+        function filterPortfolio(category) {
+            currentCategory = category;
+            isShowAll = false;
+            
+            // Button Style UI
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('bg-gradient-to-r', 'from-teal-500', 'to-emerald-500', 'text-white', 'shadow-lg');
+                btn.classList.add('bg-slate-100', 'text-slate-600');
+                if(btn.innerText === category) {
+                    btn.classList.add('bg-gradient-to-r', 'from-teal-500', 'to-emerald-500', 'text-white', 'shadow-lg');
+                    btn.classList.remove('bg-slate-100', 'text-slate-600');
+                }
+            });
+
+            renderPortfolio();
+        }
+
+        function toggleShowAll() {
+            isShowAll = !isShowAll;
+            const btn = document.getElementById('show-more-btn');
+            btn.innerHTML = isShowAll 
+                ? '<span>Show Less</span> <i data-lucide="chevron-up" class="w-5 h-5"></i>' 
+                : '<span>Show More Projects</span> <i data-lucide="chevron-down" class="w-5 h-5"></i>';
+            renderPortfolio();
+        }
+
+        // Initialize Icons and Portfolio
+        lucide.createIcons();
+        renderPortfolio();
+
+        // Scroll Reveal Logic
+        window.addEventListener('scroll', () => {
+            document.querySelectorAll('.reveal').forEach(el => {
+                if (el.getBoundingClientRect().top < window.innerHeight - 100) el.classList.add('active');
+            });
+        });
+    </script>
+
+    <style>
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.6s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Custom Hover Bg Opacity Logic */
+        .service-card:hover .hover-bg {
+            opacity: 1;
+        }
+    </style>
+
+    <section id="services" class="relative py-24 lg:py-32 bg-slate-50 overflow-hidden">
+        
+        <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent"></div>
+        <div class="absolute top-1/4 left-0 w-64 h-64 bg-teal-100 rounded-full blur-3xl opacity-40"></div>
+        <div class="absolute bottom-1/4 right-0 w-64 h-64 bg-violet-100 rounded-full blur-3xl opacity-40"></div>
+
+        <div class="relative max-w-7xl mx-auto px-6 lg:px-8">
+            
+            <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+                <div class="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full shadow-sm border border-slate-100 mb-6">
+                    <span class="w-2 h-2 bg-teal-500 rounded-full"></span>
+                    <span class="text-slate-600 text-sm font-semibold uppercase tracking-wider">My Services</span>
+                </div>
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 mb-6">
+                    Services I <span class="bg-gradient-to-r from-teal-500 to-emerald-500 bg-clip-text text-transparent">Provide</span>
+                </h2>
+                <p class="text-lg text-slate-600 leading-relaxed">
+                    I offer a comprehensive range of web development services to help bring your digital vision to life with precision and creativity.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8" id="services-grid">
+                </div>
+        </div>
+    </section>
+
+    <script>
+        const services = [
+            {
+                icon: 'code-2',
+                title: 'Front End Development',
+                description: 'I convert any design file: PSD, XD, Sketch, Ai, Figma, Pdf, Brochure to pixel-perfect, eye-catching, responsive, SEO friendly and standard-compliant HTML/CSS template.',
+                features: ['Pixel Perfect', 'Responsive Design', 'Clean Code', 'Cross-Browser'],
+                gradient: 'from-teal-500 to-cyan-500',
+                bgGradient: 'from-teal-500/10 to-cyan-500/10',
+                linkColor: '#14b8a6'
+            },
+            {
+                icon: 'globe',
+                title: 'WordPress Development',
+                description: 'I design to deliver 100% Responsive, Pixel-Perfect, and High-Quality Fully Functional Website Based on WordPress.',
+                features: ['Custom Themes', 'Plugin Development', 'Speed Optimization', 'Security'],
+                gradient: 'from-violet-500 to-purple-500',
+                bgGradient: 'from-violet-500/10 to-purple-500/10',
+                linkColor: '#8b5cf6'
+            },
+            {
+                icon: 'shopping-cart',
+                title: 'WooCommerce Development',
+                description: 'I turn designs based on WooCommerce into Pixel Perfect, and high-quality fully functional store websites, and I help you launch your ecommerce site.',
+                features: ['E-commerce Setup', 'Payment Gateway', 'Product Management', 'Custom Checkout'],
+                gradient: 'from-orange-500 to-amber-500',
+                bgGradient: 'from-orange-500/10 to-amber-500/10',
+                linkColor: '#f97316'
+            },
+            {
+                icon: 'pen-tool',
+                title: 'UI/UX Design',
+                description: 'Creating intuitive and visually stunning user interfaces that enhance user experience and drive engagement across all devices.',
+                features: ['User Research', 'Wireframing', 'Prototyping', 'Visual Design'],
+                gradient: 'from-rose-500 to-pink-500',
+                bgGradient: 'from-rose-500/10 to-pink-500/10',
+                linkColor: '#f43f5e'
+            }
+        ];
+
+        function renderServices() {
+            const grid = document.getElementById('services-grid');
+            grid.innerHTML = services.map((service, index) => `
+                <div class="service-card group relative reveal" style="transition-delay: ${index * 0.15}s">
+                    <div class="relative h-full p-8 bg-white rounded-3xl border border-slate-100 shadow-xl shadow-slate-100/50 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden">
+                        
+                        <div class="hover-bg absolute inset-0 bg-gradient-to-br ${service.bgGradient} opacity-0 transition-opacity duration-500"></div>
+                        
+                        <div class="relative z-10">
+                            <div class="inline-flex p-4 rounded-2xl bg-gradient-to-br ${service.gradient} shadow-lg shadow-slate-200/50 mb-6">
+                                <i data-lucide="${service.icon}" class="w-7 h-7 text-white"></i>
+                            </div>
+
+                            <h3 class="text-xl font-bold text-slate-900 mb-4 group-hover:text-slate-900">
+                                ${service.title}
+                            </h3>
+
+                            <p class="text-slate-600 leading-relaxed mb-6">
+                                ${service.description}
+                            </p>
+
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                ${service.features.map(f => `
+                                    <span class="px-3 py-1 bg-slate-50 text-slate-600 text-xs font-medium rounded-full group-hover:bg-white/80 transition-colors">
+                                        ${f}
+                                    </span>
+                                `).join('')}
+                            </div>
+
+                            <a href="#contact" class="inline-flex items-center gap-2 text-sm font-semibold group/link" style="color: ${service.linkColor}">
+                                <span class="bg-gradient-to-r ${service.gradient} bg-clip-text text-transparent">Get Started</span>
+                                <i data-lucide="arrow-right" class="w-4 h-4 transition-transform group-hover/link:translate-x-1"></i>
+                            </a>
+                        </div>
+
+                        <div class="absolute -top-12 -right-12 w-32 h-32 bg-gradient-to-br ${service.gradient} opacity-5 rounded-full blur-2xl group-hover:opacity-20 transition-opacity"></div>
+                    </div>
+                </div>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        // Initialize Rendering 🚀
+        renderServices();
+
+        // Scroll Reveal Logic 🖱️
+        function reveal() {
+            document.querySelectorAll('.reveal').forEach(el => {
+                if (el.getBoundingClientRect().top < window.innerHeight - 100) el.classList.add('active');
+            });
+        }
+        window.addEventListener('scroll', reveal);
+        reveal(); // Run on load
+    </script>
+
+    <style>
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Loading Animation */
+        .spinner {
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
+
+    <section id="contact" class="relative py-24 lg:py-32 bg-slate-900 overflow-hidden">
+        
+        <div class="absolute inset-0">
+            <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-700 to-transparent"></div>
+            <div class="absolute top-1/4 -left-32 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl"></div>
+            <div class="absolute bottom-1/4 -right-32 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl"></div>
+            <div class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:64px_64px]"></div>
+        </div>
+
+        <div class="relative max-w-7xl mx-auto px-6 lg:px-8">
+            
+            <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+                <div class="inline-flex items-center gap-2 px-4 py-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full mb-6">
+                    <span class="w-2 h-2 bg-teal-400 rounded-full"></span>
+                    <span class="text-teal-400 text-sm font-semibold uppercase tracking-wider">Contact</span>
+                </div>
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6">
+                    Let's Work <span class="bg-gradient-to-r from-teal-400 to-emerald-400 bg-clip-text text-transparent">Together</span>
+                </h2>
+                <p class="text-lg text-slate-400">
+                    Have a project in mind? Let's collaborate to create something amazing.
+                </p>
+            </div>
+
+            <div class="grid lg:grid-cols-5 gap-12 lg:gap-16">
+                
+                <div class="lg:col-span-2 space-y-6 reveal" style="transition-delay: 0.2s;">
+                    <div class="mb-8">
+                        <h3 class="text-2xl font-bold text-white mb-4">Get in Touch</h3>
+                        <p class="text-slate-400 leading-relaxed">
+                            Ready to start your project? Contact me through any of the methods below, or fill out the form.
+                        </p>
+                    </div>
+
+                    <a href="mailto:pwdsumonbd@gmail.com" class="group flex items-center gap-5 p-5 bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl hover:bg-white/10 hover:border-teal-500/30 transition-all duration-300">
+                        <div class="p-4 rounded-xl bg-gradient-to-br from-teal-500 to-cyan-500 shadow-lg">
+                            <i data-lucide="mail" class="w-6 h-6 text-white"></i>
+                        </div>
+                        <div>
+                            <div class="text-sm text-slate-400 mb-1">Email</div>
+                            <div class="text-white font-semibold group-hover:text-teal-400 transition-colors">pwdsumonbd@gmail.com</div>
+                        </div>
+                    </a>
+
+                    <a href="tel:+8801988967066" class="group flex items-center gap-5 p-5 bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl hover:bg-white/10 hover:border-teal-500/30 transition-all duration-300">
+                        <div class="p-4 rounded-xl bg-gradient-to-br from-violet-500 to-purple-500 shadow-lg">
+                            <i data-lucide="phone" class="w-6 h-6 text-white"></i>
+                        </div>
+                        <div>
+                            <div class="text-sm text-slate-400 mb-1">Phone</div>
+                            <div class="text-white font-semibold group-hover:text-teal-400 transition-colors">+88 01988967066</div>
+                        </div>
+                    </a>
+
+                    <div class="group flex items-center gap-5 p-5 bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl hover:bg-white/10 hover:border-teal-500/30 transition-all duration-300">
+                        <div class="p-4 rounded-xl bg-gradient-to-br from-orange-500 to-amber-500 shadow-lg">
+                            <i data-lucide="map-pin" class="w-6 h-6 text-white"></i>
+                        </div>
+                        <div>
+                            <div class="text-sm text-slate-400 mb-1">Location</div>
+                            <div class="text-white font-semibold group-hover:text-teal-400 transition-colors">Khulna, Bangladesh</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-3 reveal" style="transition-delay: 0.4s;">
+                    <div class="p-8 lg:p-10 bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl">
+                        <form id="contact-form" class="space-y-6">
+                            <div class="grid sm:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="text-sm font-medium text-slate-300 mb-2 block">Your Name</label>
+                                    <input type="text" name="name" required placeholder="John Doe" class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-slate-500 focus:outline-none focus:border-teal-500 transition-colors">
+                                </div>
+                                <div>
+                                    <label class="text-sm font-medium text-slate-300 mb-2 block">Email Address</label>
+                                    <input type="email" name="email" required placeholder="john@example.com" class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-slate-500 focus:outline-none focus:border-teal-500 transition-colors">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="text-sm font-medium text-slate-300 mb-2 block">Subject</label>
+                                <input type="text" name="subject" required placeholder="How can I help you?" class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-slate-500 focus:outline-none focus:border-teal-500 transition-colors">
+                            </div>
+                            <div>
+                                <label class="text-sm font-medium text-slate-300 mb-2 block">Message</label>
+                                <textarea name="message" required rows="4" placeholder="Write your message here..." class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-slate-500 focus:outline-none focus:border-teal-500 transition-colors resize-none"></textarea>
+                            </div>
+
+                            <button type="submit" id="submit-btn" class="w-full flex items-center justify-center gap-2 py-4 bg-gradient-to-r from-teal-500 to-emerald-500 text-white font-bold rounded-xl hover:shadow-lg hover:shadow-teal-500/25 transition-all duration-300 disabled:opacity-70">
+                                <span>Send Message</span>
+                                <i data-lucide="send" class="w-5 h-5"></i>
+                            </button>
+                        </form>
+
+                        <div id="success-msg" class="hidden mt-6 p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-xl flex items-center gap-3 text-emerald-400">
+                            <i data-lucide="check-circle" class="w-5 h-5"></i>
+                            <span>Message sent successfully! I'll get back to you soon.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // Form Submission Logic 🚀
+        const form = document.getElementById('contact-form');
+        const btn = document.getElementById('submit-btn');
+        const successMsg = document.getElementById('success-msg');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // UI State Change (Loading)
+            btn.disabled = true;
+            btn.innerHTML = `<span>Sending...</span> <i data-lucide="loader-2" class="w-5 h-5 spinner"></i>`;
+            lucide.createIcons();
+
+            // Simulate API Call
+            await new Promise(resolve => setTimeout(resolve, 1500));
+
+            // Success State
+            btn.innerHTML = `<span>Message Sent!</span> <i data-lucide="check-circle" class="w-5 h-5"></i>`;
+            lucide.createIcons();
+            successMsg.classList.remove('hidden');
+            form.reset();
+
+            // Reset Button after 3 seconds
+            setTimeout(() => {
+                btn.disabled = false;
+                btn.innerHTML = `<span>Send Message</span> <i data-lucide="send" class="w-5 h-5"></i>`;
+                successMsg.classList.add('hidden');
+                lucide.createIcons();
+            }, 3000);
+        });
+
+        // Scroll Reveal Logic 🖱️
+        function reveal() {
+            document.querySelectorAll('.reveal').forEach(el => {
+                if (el.getBoundingClientRect().top < window.innerHeight - 100) el.classList.add('active');
+            });
+        }
+        window.addEventListener('scroll', reveal);
+        reveal();
+    </script>
+
+    <footer class="relative bg-slate-950 py-8 overflow-hidden">
+        
+        <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-800 to-transparent"></div>
+
+        <div class="relative max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                
+                <a href="#home" class="flex items-center gap-3 transition-transform hover:scale-105 duration-300">
+                    <img 
+                        src="https://res.cloudinary.com/kaepaboss/image/upload/v1702992648/portfolio/logo.png" 
+                        alt="Logo" 
+                        class="h-8 w-auto"
+                    />
+                </a>
+
+                <div class="flex items-center gap-2 text-slate-500 text-sm">
+                    <span>© <span id="year"></span> Pwdsumon. Made with</span>
+                    <i data-lucide="heart" class="w-4 h-4 text-rose-500 fill-rose-500"></i>
+                    <span>in Bangladesh</span>
+                </div>
+
+                <nav class="flex items-center gap-6">
+                    <a href="#home" class="text-slate-500 hover:text-teal-400 text-sm transition-colors duration-300">Home</a>
+                    <a href="#about" class="text-slate-500 hover:text-teal-400 text-sm transition-colors duration-300">About</a>
+                    <a href="#portfolio" class="text-slate-500 hover:text-teal-400 text-sm transition-colors duration-300">Portfolio</a>
+                    <a href="#contact" class="text-slate-500 hover:text-teal-400 text-sm transition-colors duration-300">Contact</a>
+                </nav>
+
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Set Current Year 📅
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Initialize Lucide Icons 🎭
+        lucide.createIcons();
+
+        // Smooth Scroll Logic 🖱️
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
+
